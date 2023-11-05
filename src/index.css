@@ -22,6 +22,10 @@
   display: none;
 }
 
+.tag-wrapper {
+  top: 75px;
+}
+
 .card {
   width: 32%;
 }

@@ -13,6 +13,21 @@ export default function VideoPage() {
   const videoEndPoint = 'https://www.googleapis.com/youtube/v3/videos?';
   const channelEndPoint = "https://www.googleapis.com/youtube/v3/channels?";
 
+  const getChannelIcon = (videoID) => {
+    
+    const res = fetch(channelEndPoint + new URLSearchParams({
+            key: apiKey,
+            part: 'snippet',
+            id: videoID
+        }))
+        .then(res => res.json())
+        .then(data => {
+            consol.log("fetched data: ", data)
+            setChannelIcon(data.items[0].snippet.thumbnails.default.url);
+        }).catch(error => {
+            console.error('Error fetching channel icon:', error);
+        });
+}
 
 //   Calling the api
 useEffect(()=> {
@@ -23,7 +38,7 @@ useEffect(()=> {
             part: 'snippet',
             chart: 'mostPopular',
             maxResults: 51,
-            regionCode: 'NG'
+            regionCode: 'US'
         }));
 
         const data = await result.json();
@@ -38,20 +53,6 @@ useEffect(()=> {
     fetchVideos();
 }, [])
 
-// const getChannelIcon = (id) => {
-    
-//         const res = fetch(channelEndPoint + new URLSearchParams({
-//                 key: apiKey,
-//                 part: 'snippet',
-//                 id: video_data.snippet.id
-//             }))
-//             .then(res => res.json())
-//             .then(data => {
-//                 console.log(data);
-//             })
-// }
-
-// getChannelIcon('UC_IRYSp4auq7hKLvziWVH6w')
 
 
 
@@ -60,17 +61,20 @@ useEffect(()=> {
 // Looping over fetched data to render component
 const item = datas.items
   const cards = item ? (item.map(data => {
+    // getChannelIcon(data.snippet.channelId)
+    // console.log(channelIcon)
     return <VideoCard 
-        id = {data.id} 
+        key = {data.id} 
         chanID = {data.snippet.channelId}
         title = {data.snippet.title}
         img = {data.snippet.thumbnails.high.url} 
-        chanTitle = {data.snippet.channelTitle}   
+        chanTitle = {data.snippet.channelTitle} 
+        chanIcon = {channelIcon } 
     />
   })) : null;
 
     return(
-        <section className={`flex gap-5 flex-wrap m-auto ${loader ? 'h-screen' : ''}`}>
+        <section className={`flex gap-5 flex-wrap m-auto pt-36 ${loader ? 'h-screen' : ''}`}>
             {
                 loader ? 
                 (<div className='m-auto translate-y-2/4 h-full'>

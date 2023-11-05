@@ -2,7 +2,7 @@ import {Logo, Bell, SearchIcon} from "../assets"
 
 export default function Nav () {
     return (
-        <nav className='flex items-center justify-between pt-3 px-7'>
+        <nav className='flex items-center justify-between pt-4 pb-4 px-7 fixed top-0 w-full bg-white z-50'>
             <Logo className='w-24' />
 
             <form className='search-bar flex '>
