@@ -38,20 +38,20 @@ useEffect(()=> {
     fetchVideos();
 }, [])
 
-const getChannelIcon = (id) => {
+// const getChannelIcon = (id) => {
     
-        const res = fetch(channelEndPoint + new URLSearchParams({
-                key: apiKey,
-                part: 'snippet',
-                id: video_data.snippet.id
-            }))
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-            })
-}
+//         const res = fetch(channelEndPoint + new URLSearchParams({
+//                 key: apiKey,
+//                 part: 'snippet',
+//                 id: video_data.snippet.id
+//             }))
+//             .then(res => res.json())
+//             .then(data => {
+//                 console.log(data);
+//             })
+// }
 
-getChannelIcon('UC_IRYSp4auq7hKLvziWVH6w')
+// getChannelIcon('UC_IRYSp4auq7hKLvziWVH6w')
 
 
 
