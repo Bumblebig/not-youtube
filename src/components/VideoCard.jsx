@@ -1,10 +1,8 @@
-import channelPic from "../assets/pfp.jpg";
+// import channelPic from "../assets/pfp.jpg";
 
 export default function VideoCard (props) {
-    // console.log('These are the props: ', props)
     return (
         <div className="pt-3 pb-6 cursor-pointer card">
-            {console.log(props)}
             <img src={props.img} alt="video" className="w-full rounded-xl transition-all hover:rounded-none h-80"/>
 
             <div className="wrapper flex items-center">

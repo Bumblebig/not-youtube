@@ -5,7 +5,7 @@ import loadImg from "../assets/Black-hole.gif"
 export default function VideoPage() {
 
     const [datas, setDatas] = useState([]);
-    const [channelIcon, setChannelIcon] = useState('')
+    const [channelIcon, setChannelIcon] = useState({})
     const [loader, setLoader] = useState(true)
 
     // Required param for api call
@@ -13,21 +13,25 @@ export default function VideoPage() {
   const videoEndPoint = 'https://www.googleapis.com/youtube/v3/videos?';
   const channelEndPoint = "https://www.googleapis.com/youtube/v3/channels?";
 
-  const getChannelIcon = (videoID) => {
-    
-    const res = fetch(channelEndPoint + new URLSearchParams({
-            key: apiKey,
-            part: 'snippet',
-            id: videoID
-        }))
-        .then(res => res.json())
-        .then(data => {
-            consol.log("fetched data: ", data)
-            setChannelIcon(data.items[0].snippet.thumbnails.default.url);
-        }).catch(error => {
-            console.error('Error fetching channel icon:', error);
-        });
-}
+//   GET CHANNEL ICON
+  const fetchChannelIcon = async (channelId) => {
+    try {
+      const result = await fetch(
+        channelEndPoint + new URLSearchParams({
+          key: apiKey,
+          part: 'snippet',
+          id: channelId,
+        })
+      );
+      const data = await result.json();
+      setChannelIcon((prevChannelIcons) => ({
+        ...prevChannelIcons,
+        [channelId]: data.items[0].snippet.thumbnails.default.url,
+      }));
+    } catch (error) {
+      console.error('Error fetching channel icon:', error);
+    }
+  };
 
 //   Calling the api
 useEffect(()=> {
@@ -54,14 +58,18 @@ useEffect(()=> {
 }, [])
 
 
-
+useEffect(() => {
+    datas.items &&
+      datas.items.forEach((item) => {
+        fetchChannelIcon(item.snippet.channelId);
+      });
+  }, [datas]);
 
 
 
 // Looping over fetched data to render component
 const item = datas.items
   const cards = item ? (item.map(data => {
-    // getChannelIcon(data.snippet.channelId)
     // console.log(channelIcon)
     return <VideoCard 
         key = {data.id} 
@@ -69,7 +77,7 @@ const item = datas.items
         title = {data.snippet.title}
         img = {data.snippet.thumbnails.high.url} 
         chanTitle = {data.snippet.channelTitle} 
-        chanIcon = {channelIcon } 
+        chanIcon = {channelIcon[data.snippet.channelId]} 
     />
   })) : null;
 
