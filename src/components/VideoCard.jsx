@@ -9,7 +9,7 @@ export default function VideoCard (props) {
                 <img src={props.chanIcon} alt="icon" className="w-12 h-12 rounded-full relative top-1"/>
                 <div>
                 <h2 className="font-medium mt-3 px-5 text-lg">{props.title}</h2>
-                <p className="text-gray-500 px-5 text-sm mt-1">{props.chanTitle} • <span>10 hours ago</span></p>
+                <p className="text-gray-500 px-5 text-sm mt-1">{props.chanTitle} • <span>{props.time} ago</span></p>
                 </div>
             </div>
         </div>

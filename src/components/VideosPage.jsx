@@ -66,11 +66,37 @@ useEffect(() => {
   }, [datas]);
 
 
+// Formatting time
+const formatTime = function(date) {
+        const calcHoursPassed = (date1, date2) => {
+            return Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60));
+        }
+      
+        const time = new Date(date);
+        const hourPassed = calcHoursPassed(new Date(), time);
+        const day = Math.round(Math.abs(hourPassed / 24));
+        const week = Math.round(Math.abs(day / 7));
+        const min = Math.round(Math.abs(hourPassed / 60));
+
+        
+        if (hourPassed < 24) {
+            if (hourPassed < 1) return `${min} ${min > 1 ? 'mins' : 'min'}` 
+            else return `${hourPassed} ${hourPassed > 1 ? 'hours' : 'hour'}`;
+        }
+
+        if (hourPassed > 24) {
+            if (week > 1) {
+                return `${week} weeks`
+            } else if (day === 7) {
+                return `1 week`
+            } else return `${day} ${day > 1 ? 'days' : 'day'}`
+        }
+}
+
 
 // Looping over fetched data to render component
 const item = datas.items
   const cards = item ? (item.map(data => {
-    // console.log(channelIcon)
     return <VideoCard 
         key = {data.id} 
         chanID = {data.snippet.channelId}
@@ -78,6 +104,7 @@ const item = datas.items
         img = {data.snippet.thumbnails.high.url} 
         chanTitle = {data.snippet.channelTitle} 
         chanIcon = {channelIcon[data.snippet.channelId]} 
+        time = {formatTime(data.snippet.publishedAt)}
     />
   })) : null;
 
