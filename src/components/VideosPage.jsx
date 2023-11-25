@@ -13,6 +13,12 @@ export default function VideoPage() {
   const videoEndPoint = 'https://www.googleapis.com/youtube/v3/videos?';
   const channelEndPoint = "https://www.googleapis.com/youtube/v3/channels?";
 
+
+//   Get region code
+const userLanguage = navigator.language;
+const region = userLanguage.split('-')[1];
+
+
 //   GET CHANNEL ICON
   const fetchChannelIcon = async (channelId) => {
     try {
@@ -42,7 +48,7 @@ useEffect(()=> {
             part: 'snippet',
             chart: 'mostPopular',
             maxResults: 51,
-            regionCode: 'US'
+            regionCode: region
         }));
 
         const data = await result.json();
