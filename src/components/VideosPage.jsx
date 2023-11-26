@@ -15,7 +15,7 @@ export default function VideoPage() {
 
 
 //   Get region code
-const userLanguage = navigator.locale;
+const userLanguage = navigator.language;
 const region = userLanguage.split('-')[1];
 
 
