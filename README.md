@@ -21,6 +21,7 @@ A YouTube clone web application built using React that allows users to browse, s
 ## Author
 
 - [@Bumblebig](https://www.github.com/Bumblebig)
+- [@RealCecil4](https://twitter.com/RealCecil$)
 
 ## Getting Started
 
